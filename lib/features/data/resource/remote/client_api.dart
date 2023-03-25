@@ -2,11 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-
-import '../../../../core/helper/type_def.dart';
-import 'response/err_response.dart';
 
 Object? _toEncodable(Object? nonEncodable) =>
     nonEncodable is DateTime ? nonEncodable.toIso8601String() : nonEncodable;
@@ -92,6 +88,7 @@ class ClientDio implements AppHttpClient {
     final response = await _dio.fetch(RequestOptions(
       method: 'POST',
       baseUrl: url.origin,
+      headers: headers,
       path: url.path,
       queryParameters: url.queryParameters,
       data: body != null ? jsonEncode(body, toEncodable: _toEncodable) : null,

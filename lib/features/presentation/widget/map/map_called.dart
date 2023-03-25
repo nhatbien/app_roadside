@@ -10,18 +10,18 @@ import 'package:roadside_assistance/features/presentation/blocs/location/locatio
 import 'package:roadside_assistance/features/presentation/widget/map/widget/marker_widget.dart';
 import 'package:roadside_assistance/features/presentation/widget/map/widget/scale_layout_widget.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 import '../../../../ultils/helper.dart';
+import '../../blocs/order/order_bloc.dart';
 
-class LocationMap extends StatefulWidget {
-  const LocationMap({super.key});
+class LocationCalledMap extends StatefulWidget {
+  const LocationCalledMap({super.key});
 
   @override
-  State<StatefulWidget> createState() => LocationMapState();
+  State<StatefulWidget> createState() => LocationCalledMapState();
 }
 
-class LocationMapState extends State<LocationMap>
+class LocationCalledMapState extends State<LocationCalledMap>
     with TickerProviderStateMixin {
   late final MapController _mapController;
   Uint8List? sourceIcon;
@@ -43,7 +43,6 @@ class LocationMapState extends State<LocationMap>
 
   void _initData() async {
     //await loadDataProvine();
-    context.read<LocationBloc>().add(StartTrackingLocation());
 
     setSourceAndDestinationIcons();
   }
@@ -190,20 +189,25 @@ class LocationMapState extends State<LocationMap>
                               state.currentLocation?.longitude ?? 105.7709829),
                           builder: (ctx) => const MarkerVipPro()),
                     ]),
-                    state.des != null
-                        ? MarkerLayer(rotate: true, markers: [
-                            Marker(
-                              width: 80,
-                              height: 80,
-                              point: state.des!,
-                              builder: (ctx) => const Icon(
-                                Icons.location_pin,
-                                color: Colors.purple,
-                                size: 50,
-                              ),
-                            ),
-                          ])
-                        : const SizedBox(),
+                    BlocBuilder<OrderBloc, OrderState>(
+                      builder: (context, state) {
+                        return state.order?.rescueUnit?.lat != null
+                            ? MarkerLayer(rotate: true, markers: [
+                                Marker(
+                                  width: 80,
+                                  height: 80,
+                                  point: LatLng(state.order!.rescueUnit!.lat!,
+                                      state.order!.rescueUnit!.lng!),
+                                  builder: (ctx) => const Icon(
+                                    Icons.location_pin,
+                                    color: Colors.purple,
+                                    size: 50,
+                                  ),
+                                ),
+                              ])
+                            : const SizedBox();
+                      },
+                    ),
                   ],
                 );
         },

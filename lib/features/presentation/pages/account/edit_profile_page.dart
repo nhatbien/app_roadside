@@ -103,7 +103,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 35,
                   ),
                   buildTextField("Họ tên", state.user?.fullName ?? "", false),
-                  buildTextField("SĐT", state.user?.phone ?? "", false),
+                  Flexible(
+                      child: buildTextField(
+                          "SĐT", state.user?.phone ?? "", false)),
 /*                   buildTextField("Password", "********", true),
  */
                   buildTextField("Địa chỉ", state.user?.address ?? "", false),

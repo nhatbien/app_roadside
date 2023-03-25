@@ -81,9 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         status: AuthStatusBloc.failure,
         messageError: l.error,
       ));
-      print(2222);
     }, (r) {
-      print(1);
       injector<PrefManager>().token = r.token;
       emit(state.copyWith(
         status: AuthStatusBloc.authenticated,

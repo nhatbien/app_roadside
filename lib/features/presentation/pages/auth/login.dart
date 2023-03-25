@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "HELP ".toUpperCase(),
+                  "HELP  ".toUpperCase(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,

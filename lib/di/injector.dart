@@ -4,9 +4,12 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:roadside_assistance/core/helper/pref_manager.dart';
 import 'package:roadside_assistance/features/data/repo_impl/map_impl.dart';
+import 'package:roadside_assistance/features/data/repo_impl/order_impl.dart';
 import 'package:roadside_assistance/features/data/resource/remote/goong_service.dart';
 import 'package:roadside_assistance/features/domain/repository/map_repository.dart';
+import 'package:roadside_assistance/features/domain/repository/order_repositoy.dart';
 import 'package:roadside_assistance/features/presentation/blocs/location/location_bloc.dart';
+import 'package:roadside_assistance/features/presentation/blocs/order/order_bloc.dart';
 import 'package:roadside_assistance/service/location_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,6 +56,7 @@ void repository() {
     injector(),
   ));
   injector.registerSingleton<MapRepository>(MapRepoImpl(injector()));
+  injector.registerSingleton<OrderRepository>(OrderImpl(injector()));
 
   /* injector.registerSingleton<OrderRepository>(OrderImpl(injector()));
   injector.registerSingleton<SettingRepository>(SettingImpl(injector()));
@@ -92,9 +96,13 @@ void bloc() {
     () => LocationBloc(
       injector(),
       injector(),
+      injector(),
     ),
   );
   injector.registerFactory<AuthBloc>(
     () => AuthBloc(injector()),
+  );
+  injector.registerFactory<OrderBloc>(
+    () => OrderBloc(injector()),
   );
 }

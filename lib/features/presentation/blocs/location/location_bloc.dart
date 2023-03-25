@@ -7,11 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:roadside_assistance/features/domain/repository/auth_repository.dart';
 
 import '../../../../core/resource/datastate.dart';
 import '../../../../service/location_service.dart';
 import '../../../data/model/directions_model.dart';
 import '../../../data/model/geocoding_model.dart';
+import '../../../data/model/request_location_model.dart';
 import '../../../domain/entity/type.dart';
 import '../../../domain/repository/map_repository.dart';
 
@@ -28,8 +30,9 @@ extension PolylineExt on List<List<num>> {
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationService _locationService;
+  final AuthRepository _authRepository;
   final MapRepository _mapRepository;
-  LocationBloc(this._locationService, this._mapRepository)
+  LocationBloc(this._locationService, this._mapRepository, this._authRepository)
       : super(const LocationState()) {
     on<GetCurrentLocation>(
       getCurrentLocation,
@@ -113,7 +116,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   void getAddressFormLatLng(
       GetAddressFormLatLng event, Emitter<LocationState> emit) async {
     emit(state.copyWith(
-      status: LocationStatus.loaded,
+      status: LocationStatus.loading,
     ));
     final data = await _mapRepository.getAddressFromLatLn(
       LatLng(state.currentLocation!.latitude, state.currentLocation!.longitude),
@@ -159,17 +162,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     _positionSubscription?.cancel();
     _positionSubscription = await _locationService.createNumberStream();
     _positionSubscription?.onData((data) {
-      if (state.currentLocation?.latitude != data.latitude &&
-          state.currentLocation?.longitude != data.longitude) {
-        add(LocationChange(data));
-      }
+      add(LocationChange(data));
     });
     _positionSubscription?.onError((data) {
       _positionSubscription?.cancel();
     });
-    emit(state.copyWith(
-      status: LocationStatus.loaded,
-    ));
   }
 
   void stopTracking(LocationEvent event, Emitter<LocationState> emit) async {
@@ -178,7 +175,18 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   void saveCurrentLocation(
       LocationChange event, Emitter<LocationState> emit) async {
+    final data = await _authRepository.updateLocation(UpdateLocationRequest(
+        lat: event.latLng.latitude, lng: event.latLng.longitude));
+    data.fold((l) {
+      print(l.error);
+    }, (r) {
+      print(r);
+      print("update thanh cong");
+    });
     emit(state.copyWith(currentLocation: event.latLng));
+    emit(state.copyWith(
+      status: LocationStatus.loaded,
+    ));
   }
 
 /* 

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,9 +7,14 @@ import 'package:roadside_assistance/features/presentation/blocs/location/locatio
 
 import 'di/injector.dart';
 import 'features/presentation/blocs/auth/auth_bloc.dart';
+import 'features/presentation/blocs/order/order_bloc.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await dotenv.load(fileName: ".env");
 
   await initializeDependencies();
@@ -25,6 +31,7 @@ class BlocApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => injector()..add(AuthInit())),
         BlocProvider<LocationBloc>(create: (_) => injector()),
+        BlocProvider<OrderBloc>(create: (_) => injector()),
       ],
       child: const MyApp(),
     );
