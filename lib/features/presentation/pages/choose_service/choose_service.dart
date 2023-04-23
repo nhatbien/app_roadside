@@ -179,7 +179,7 @@ class _ChooseServicePageState extends State<ChooseServicePage> {
                             ),
                           ],
                         )),
-                    const DropdownWidget(
+                    /*  const DropdownWidget(
                       items: [
                         "Xe Máy",
                         "Xe hơi",
@@ -198,7 +198,7 @@ class _ChooseServicePageState extends State<ChooseServicePage> {
                         "Khác",
                       ],
                       title: 'Chọn dịch vụ',
-                    ),
+                    ), */
                     Card(
                         color: const Color(0xFFF2F3F5),
                         child: Padding(

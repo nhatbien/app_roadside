@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:roadside_assistance/core/routes/routes.dart';
 import 'package:roadside_assistance/features/presentation/blocs/location/location_bloc.dart';
@@ -25,6 +26,7 @@ class _CalledMapOrderState extends State<CalledMapOrder> {
   double fabHeight = 0;
   double panelHeightOpen = 0;
   double panelHeightClosed = 195.0;
+  double ratingStats = 0;
   @override
   void initState() {
     BlocProvider.of<OrderBloc>(context).add(GetOrder(widget.orderId));
@@ -69,10 +71,34 @@ class _CalledMapOrderState extends State<CalledMapOrder> {
             builder: (context) {
               return AlertDialog(
                 title: const Text("Thành công"),
-                content: const Text("Bạn đã hoàn thành đơn hàng"),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Bạn đã hoàn thành đơn hàng"),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          ratingStats = rating;
+                        });
+                      },
+                    )
+                  ],
+                ),
                 actions: [
                   TextButton(
                     onPressed: () {
+                      context.read<OrderBloc>().add(
+                          StatsChanged(state.order!.id!, stats: ratingStats));
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

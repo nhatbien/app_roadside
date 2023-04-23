@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:roadside_assistance/features/data/model/order/order_request.dart';
 import 'package:roadside_assistance/features/data/resource/remote/request/login_user.dart';
 
@@ -14,32 +16,15 @@ part 'order_event.dart';
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final OrderRepository _orderRepository;
   OrderBloc(this._orderRepository) : super(const OrderState()) {
-    on<GetOrder>(
-      getOrder,
-    );
-    on<CreatedOrder>(
-      createOrder,
-    );
-    on<AddressChanged>(
-      addressChanged,
-    );
-
-    on<NoteChanged>(
-      noteChanged,
-    );
-
-    on<GetOrderListen>(
-      getOrderListen,
-    );
-    on<ListenOrder>(
-      listenOrder,
-    );
-    on<StopListen>(
-      stopListen,
-    );
-    on<Reset>(
-      reset,
-    );
+    on<GetOrder>(getOrder);
+    on<CreatedOrder>(createOrder);
+    on<AddressChanged>(addressChanged);
+    on<NoteChanged>(noteChanged);
+    on<GetOrderListen>(getOrderListen);
+    on<ListenOrder>(listenOrder);
+    on<StopListen>(stopListen);
+    on<Reset>(reset);
+    on<StatsChanged>(statsOrder);
   }
   StreamSubscription<int>? _subscription;
 
@@ -75,6 +60,33 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         statusCreatedOrder: OrderStatusBloc.success,
         order: r,
       ));
+    });
+  }
+
+  void statsOrder(StatsChanged event, Emitter<OrderState> emit) async {
+    _subscription?.cancel();
+    final data = await _orderRepository.putStatsOrder(
+      event.stats,
+      event.orderId,
+    );
+    data.fold((l) {
+      Fluttertoast.showToast(
+          msg: l.error ?? "Lỗi",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }, (r) {
+      Fluttertoast.showToast(
+          msg: "Thành công",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
     });
   }
 

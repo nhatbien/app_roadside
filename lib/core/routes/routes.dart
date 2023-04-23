@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roadside_assistance/features/presentation/pages/account/edit_profile_page.dart';
 import 'package:roadside_assistance/features/presentation/pages/car/car_page.dart';
+import 'package:roadside_assistance/features/presentation/pages/history/history_page.dart';
 import 'package:roadside_assistance/features/presentation/pages/home/home_page.dart';
 import 'package:roadside_assistance/features/presentation/pages/motorbike/motor_bike_page.dart';
 
@@ -18,6 +19,7 @@ enum Routes {
   car,
   chooseSerivce,
   motorbike,
+  history,
 }
 
 class _Paths {
@@ -30,6 +32,7 @@ class _Paths {
   static const String car = '/Car';
   static const String motorbike = '/Motorbike';
   static const String chooseSerivce = '/chooseSerivce';
+  static const String orderHistoryPage = '/OrderHistoryPage';
 
   static const Map<Routes, String> _pathMap = {
     Routes.splash: _Paths.splash,
@@ -41,6 +44,7 @@ class _Paths {
     Routes.car: _Paths.car,
     Routes.motorbike: _Paths.motorbike,
     Routes.chooseSerivce: _Paths.chooseSerivce,
+    Routes.history: _Paths.orderHistoryPage,
   };
 
   static String of(Routes route) => _pathMap[route] ?? splash;
@@ -64,6 +68,8 @@ class AppNavigator {
         return FadeRoute(page: const EditProfilePage());
       case _Paths.chooseSerivce:
         return FadeRoute(page: const ChooseServicePage());
+      case _Paths.orderHistoryPage:
+        return FadeRoute(page: const OrderHistoryPage());
 
       /* 
       case _Paths.login:

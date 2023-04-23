@@ -17,15 +17,15 @@ import '../features/data/repo_impl/auth_impl.dart';
 import '../features/data/resource/remote/client_api.dart';
 import '../features/domain/repository/auth_repository.dart';
 import '../features/presentation/blocs/auth/auth_bloc.dart';
+import '../features/presentation/blocs/history/history_order_bloc.dart';
 
 final injector = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   injector.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());
-  injector.registerSingleton<Dio>(
-    Dio()
-      ..interceptors.add(
+  injector.registerSingleton<Dio>(Dio()
+      /* ..interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -33,8 +33,8 @@ Future<void> initializeDependencies() async {
           responseHeader: false,
           compact: false,
         ),
-      ),
-  );
+      ), */
+      );
 
   injector.registerSingleton<GeolocatorPlatform>(GeolocatorPlatform.instance);
 //////////////repository////////////////////
@@ -104,5 +104,8 @@ void bloc() {
   );
   injector.registerFactory<OrderBloc>(
     () => OrderBloc(injector()),
+  );
+  injector.registerFactory<HistoryOrderBloc>(
+    () => HistoryOrderBloc(injector()),
   );
 }

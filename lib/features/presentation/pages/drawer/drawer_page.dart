@@ -85,6 +85,7 @@ class _DrawerPageState extends State<DrawerPage> {
 
     switch (index) {
       case 0:
+        AppNavigator.push(Routes.history);
         break;
       case 1:
         AppNavigator.push(Routes.editProfile);

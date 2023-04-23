@@ -49,6 +49,13 @@ class NoteChanged extends OrderEvent {
   NoteChanged({required this.note});
 }
 
+class StatsChanged extends OrderEvent {
+  final double stats;
+  final int orderId;
+
+  StatsChanged(this.orderId, {required this.stats});
+}
+
 class HidePasswordChanged extends OrderEvent {}
 
 class PutDeliveredEvent extends OrderEvent {

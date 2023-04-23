@@ -6,6 +6,22 @@ part of 'order_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+ListOrderResponse _$ListOrderResponseFromJson(Map<String, dynamic> json) =>
+    ListOrderResponse(
+      status: json['status'] as bool?,
+      message: json['message'] as String?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ListOrderResponseToJson(ListOrderResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
 OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
     OrderResponse(
       status: json['status'] as bool?,
@@ -35,6 +51,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
       rescueUnit: json['rescue_unit'] == null
           ? null
           : RescueUnit.fromJson(json['rescue_unit'] as Map<String, dynamic>),
+      stats: (json['stats'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
@@ -43,6 +60,7 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'user_id': instance.userId,
       'address': instance.address,
       'status': instance.status,
+      'stats': instance.stats,
       'created_at': instance.createdAt,
       'update_at': instance.updatedAt,
       'user': instance.user,

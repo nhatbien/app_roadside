@@ -11,6 +11,7 @@ class OrderState extends Equatable {
   final String messageError;
   final OrderStatusBloc status;
   final OrderStatusBloc statusCreatedOrder;
+  final OrderStatusBloc statusStatOrder;
   const OrderState({
     this.address = "",
     this.count = 0,
@@ -19,11 +20,13 @@ class OrderState extends Equatable {
     this.messageError = "",
     this.status = OrderStatusBloc.initial,
     this.statusCreatedOrder = OrderStatusBloc.initial,
+    this.statusStatOrder = OrderStatusBloc.initial,
   });
   OrderState reset() {
     return const OrderState(
       status: OrderStatusBloc.initial,
       statusCreatedOrder: OrderStatusBloc.initial,
+      statusStatOrder: OrderStatusBloc.initial,
       address: "",
       count: 0,
       order: null,
@@ -35,6 +38,7 @@ class OrderState extends Equatable {
   OrderState copyWith({
     OrderStatusBloc? status,
     OrderStatusBloc? statusCreatedOrder,
+    OrderStatusBloc? statusStatOrder,
     String? address,
     OrderModel? order,
     String? note,
@@ -43,6 +47,7 @@ class OrderState extends Equatable {
   }) {
     return OrderState(
       status: status ?? this.status,
+      statusStatOrder: statusStatOrder ?? this.statusStatOrder,
       address: address ?? this.address,
       order: order ?? this.order,
       count: count ?? this.count,
@@ -58,6 +63,7 @@ class OrderState extends Equatable {
         count,
         order,
         statusCreatedOrder,
+        statusStatOrder,
         address,
         messageError,
         note,

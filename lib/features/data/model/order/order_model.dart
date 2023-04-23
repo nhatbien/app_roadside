@@ -3,6 +3,20 @@ import 'package:json_annotation/json_annotation.dart';
 part 'order_model.g.dart';
 
 @JsonSerializable()
+class ListOrderResponse {
+  bool? status;
+  String? message;
+  List<OrderModel>? data;
+
+  ListOrderResponse({this.status, this.message, this.data});
+
+  factory ListOrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$ListOrderResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListOrderResponseToJson(this);
+}
+
+@JsonSerializable()
 class OrderResponse {
   bool? status;
   String? message;
@@ -23,6 +37,7 @@ class OrderModel {
   final String? userId;
   final String? address;
   final int? status;
+  final double? stats;
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @JsonKey(name: 'update_at')
@@ -31,15 +46,17 @@ class OrderModel {
   @JsonKey(name: 'rescue_unit')
   final RescueUnit? rescueUnit;
 
-  OrderModel(
-      {this.id,
-      this.userId,
-      this.address,
-      this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.user,
-      this.rescueUnit});
+  OrderModel({
+    this.id,
+    this.userId,
+    this.address,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.user,
+    this.rescueUnit,
+    this.stats,
+  });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>
       _$OrderModelFromJson(json);

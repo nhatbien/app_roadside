@@ -8,5 +8,7 @@ abstract class OrderRepository {
   Future<Either<ErrorResponse, OrderModel>> createOrder(
       OrderCreateRequest requestLogin);
   Future<Either<ErrorResponse, OrderModel>> getOrder(int orderId);
+  Future<Either<ErrorResponse, List<OrderModel>>> getHistoryOrder();
+  Future<Either<ErrorResponse, bool>> putStatsOrder(double stats, int orderId);
   Future<bool> logout();
 }

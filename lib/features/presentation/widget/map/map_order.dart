@@ -11,6 +11,7 @@ import 'package:roadside_assistance/features/presentation/widget/map/widget/mark
 import 'package:roadside_assistance/features/presentation/widget/map/widget/scale_layout_widget.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../ultils/helper.dart';
 
@@ -230,9 +231,7 @@ class LocationMapState extends State<LocationMap>
                             : Colors.white,
                       ),
                       onPressed: () {
-                        if (state.currentLocation != null) {
-                          updatePinOnMap(state.currentLocation!);
-                        }
+                        launchUrlString('tel:19009095');
                       }),
                 ),
                 SizedBox(
