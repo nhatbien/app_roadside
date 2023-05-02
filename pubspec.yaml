@@ -63,6 +63,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   fluttertoast: ^8.2.1
   url_launcher: ^6.1.10
+  just_audio: ^0.9.32
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,7 @@ flutter:
   assets:
     - .env  
     - assets/img/
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
