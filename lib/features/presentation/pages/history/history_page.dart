@@ -113,7 +113,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
       title: Column(
         children: [
           Text(
-            "ssssss",
+            "Lịch sử đơn hàng",
             style: Theme.of(context).textTheme.titleLarge!.merge(TextStyle(
                 letterSpacing: 1.3,
                 color: Theme.of(context).brightness == Brightness.dark

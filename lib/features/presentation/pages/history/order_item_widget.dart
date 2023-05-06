@@ -24,7 +24,8 @@ class MyOrderHistoryItemWidget extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 5),
           child: Text(
               DateFormat('HH:mm').format(
-                  DateTime.parse(order.updatedAt ?? DateTime.now().toString())),
+                  DateTime.parse(order.updatedAt ?? DateTime.now().toString())
+                      .toLocal()),
               style: Theme.of(context).textTheme.bodyMedium!.merge(TextStyle(
                     fontSize: 15,
                     color: Theme.of(context).brightness == Brightness.dark

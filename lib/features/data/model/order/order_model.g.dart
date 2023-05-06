@@ -44,7 +44,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
       address: json['address'] as String?,
       status: json['status'] as int?,
       createdAt: json['created_at'] as String?,
-      updatedAt: json['update_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -62,7 +62,7 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'status': instance.status,
       'stats': instance.stats,
       'created_at': instance.createdAt,
-      'update_at': instance.updatedAt,
+      'updated_at': instance.updatedAt,
       'user': instance.user,
       'rescue_unit': instance.rescueUnit,
     };

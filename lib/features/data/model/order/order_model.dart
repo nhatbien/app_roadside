@@ -40,7 +40,7 @@ class OrderModel {
   final double? stats;
   @JsonKey(name: 'created_at')
   final String? createdAt;
-  @JsonKey(name: 'update_at')
+  @JsonKey(name: 'updated_at')
   final String? updatedAt;
   final User? user;
   @JsonKey(name: 'rescue_unit')
