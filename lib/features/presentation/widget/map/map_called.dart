@@ -10,6 +10,7 @@ import 'package:roadside_assistance/features/presentation/blocs/location/locatio
 import 'package:roadside_assistance/features/presentation/widget/map/widget/marker_widget.dart';
 import 'package:roadside_assistance/features/presentation/widget/map/widget/scale_layout_widget.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../ultils/helper.dart';
 import '../../blocs/order/order_bloc.dart';
@@ -234,9 +235,7 @@ class LocationCalledMapState extends State<LocationCalledMap>
                             : Colors.white,
                       ),
                       onPressed: () {
-                        if (state.currentLocation != null) {
-                          updatePinOnMap(state.currentLocation!);
-                        }
+                        launchUrlString("tel:1900 1234 5678");
                       }),
                 ),
                 SizedBox(

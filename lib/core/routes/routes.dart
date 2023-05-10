@@ -6,6 +6,7 @@ import 'package:roadside_assistance/features/presentation/pages/home/home_page.d
 import 'package:roadside_assistance/features/presentation/pages/motorbike/motor_bike_page.dart';
 
 import '../../features/presentation/pages/auth/login.dart';
+import '../../features/presentation/pages/auth/register.dart';
 import '../../features/presentation/pages/choose_service/choose_service.dart';
 import '../../features/presentation/pages/splash/splash_page.dart';
 
@@ -62,6 +63,8 @@ class AppNavigator {
         return FadeRoute(page: const MotorBikePage());
       case _Paths.login:
         return FadeRoute(page: const LoginPage());
+      case _Paths.register:
+        return FadeRoute(page: const RegisterPage());
       case _Paths.home:
         return FadeRoute(page: const HomePage());
       case _Paths.editProfile:

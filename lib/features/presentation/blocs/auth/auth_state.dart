@@ -17,6 +17,7 @@ class AuthState extends Equatable {
   final String password;
   final String messageError;
   final AuthStatusBloc status;
+  final AuthStatusBloc registerStatus;
   final bool isHidePassword;
   const AuthState({
     this.phone = "",
@@ -24,11 +25,13 @@ class AuthState extends Equatable {
     this.password = "",
     this.messageError = "",
     this.status = AuthStatusBloc.initial,
+    this.registerStatus = AuthStatusBloc.initial,
     this.isHidePassword = true,
   });
 
   AuthState copyWith({
     AuthStatusBloc? status,
+    AuthStatusBloc? registerStatus,
     bool? isHidePassword,
     String? phone,
     UserModel? user,
@@ -37,6 +40,7 @@ class AuthState extends Equatable {
   }) {
     return AuthState(
       status: status ?? this.status,
+      registerStatus: registerStatus ?? this.registerStatus,
       phone: phone ?? this.phone,
       user: user ?? this.user,
       password: password ?? this.password,
@@ -49,6 +53,7 @@ class AuthState extends Equatable {
   List<Object?> get props => [
         status,
         user,
+        registerStatus,
         isHidePassword,
         phone,
         messageError,

@@ -67,7 +67,7 @@ class MyOrderHistoryItemWidget extends StatelessWidget {
   Widget buildInfPayMentAndPriority(context) {
     return Padding(
       padding: const EdgeInsets.only(right: 16),
-      child: Text(order.id!.toString(),
+      child: Text(" Đơn hàng: ${order.id!}",
           style: Theme.of(context).textTheme.bodyMedium!.merge(TextStyle(
                 fontSize: 15,
                 color: Theme.of(context).brightness == Brightness.dark
@@ -79,14 +79,17 @@ class MyOrderHistoryItemWidget extends StatelessWidget {
 
   Widget buildTypeAndStatusAndTotalPrice(context) {
     return ListTile(
-      leading: Icon(Icons.help_outline,
-          color: Theme.of(context).colorScheme.secondary),
+      leading: Icon(
+        order.status == 4 ? Icons.check : Icons.close,
+        color: order.status == 4 ? Colors.green : Colors.red,
+        size: 30,
+      ),
       title: Row(
         children: [
-          Text(order.rescueUnit?.name ?? "Không tên",
+          Text(order.status == 4 ? "Cứu hộ thành công" : "Cứu hộ thất bại",
               style: Theme.of(context).textTheme.bodyMedium!.merge(TextStyle(
                   fontSize: 15,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: order.status == 4 ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold))),
           const SizedBox(
             width: 5,
@@ -98,14 +101,6 @@ class MyOrderHistoryItemWidget extends StatelessWidget {
           ),
           const SizedBox(
             width: 5,
-          ),
-          Flexible(
-            child: Text("Miễn phí",
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall!.merge(TextStyle(
-                    fontSize: statusFontSize == true ? 18 : 15,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold))),
           ),
         ],
       ),
@@ -138,6 +133,15 @@ class MyOrderHistoryItemWidget extends StatelessWidget {
             )
           ],
         ),
+        const SizedBox(
+          height: 16,
+        ),
+        Text("Cứu hộ: ${order.rescueUnit?.name ?? "Không tên"}",
+            style: Theme.of(context).textTheme.bodyMedium!.merge(
+                const TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold))),
         const SizedBox(
           height: 16,
         ),

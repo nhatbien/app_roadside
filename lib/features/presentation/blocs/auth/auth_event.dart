@@ -7,6 +7,11 @@ abstract class AuthEvent extends Equatable {
 
 class AuthInit extends AuthEvent {}
 
+class Register extends AuthEvent {
+  final RegisterRequest registerRequest;
+  Register({required this.registerRequest});
+}
+
 class AuthLogout extends AuthEvent {}
 
 class AuthUnAuthenticated extends AuthEvent {}

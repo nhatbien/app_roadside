@@ -59,13 +59,13 @@ class _DrawerPageState extends State<DrawerPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    DrawerItem(
+                    /*  DrawerItem(
                         name: 'Setting',
                         icon: Icons.settings,
                         onPressed: () => onItemPressed(context, index: 4)),
                     const SizedBox(
                       height: 30,
-                    ),
+                    ), */
                     DrawerItem(
                         name: 'Log out',
                         icon: Icons.logout,

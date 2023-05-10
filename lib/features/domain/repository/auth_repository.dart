@@ -9,6 +9,7 @@ import '../../data/resource/remote/response/err_response.dart';
 abstract class AuthRepository {
   Future<Either<ErrorResponse, UserModel>> login(LoginRequest requestLogin);
   Future<Either<ErrorResponse, UserModel>> getProfile();
+  Future<Either<ErrorResponse, bool>> register(RegisterRequest requestLogin);
   Future<Either<ErrorResponse, bool>> updateLocation(
       UpdateLocationRequest requestLogin);
   Future<bool> logout();

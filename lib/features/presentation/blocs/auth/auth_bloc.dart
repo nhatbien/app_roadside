@@ -34,6 +34,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLogout>(
       logoutSubmit,
     );
+    on<Register>(
+      register,
+    );
     on<AuthUnAuthenticated>(
       unauthenticated,
     );
@@ -49,20 +52,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (data is DataSuccess && data.data != null) {}
     if (data is DataFailed) {}
   } */
+  Future<void> register(Register event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(
+      registerStatus: AuthStatusBloc.loading,
+    ));
+    final response = await _authRepository.register(event.registerRequest);
+    response.fold((l) {
+      emit(state.copyWith(
+        registerStatus: AuthStatusBloc.failure,
+        messageError: l.error,
+      ));
+    }, (r) {
+      emit(state.copyWith(
+        registerStatus: AuthStatusBloc.loaded,
+      ));
+    });
+  }
 
   void loginSubmit(LoginSubmitted event, Emitter<AuthState> emit) async {
     emit(state.copyWith(
       status: AuthStatusBloc.loading,
     ));
 
-    if (state.phone.length < 10) {
+    /*  if (state.phone.length < 10) {
       emit(
         state.copyWith(
             status: AuthStatusBloc.failure,
             messageError: "Vui lòng kiểm tra đúng Số điện thoại"),
       );
       return;
-    }
+    } */
     if (state.password.isEmpty) {
       emit(
         state.copyWith(
@@ -91,18 +110,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void getProfile(AuthEvent event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(
+    /*   emit(state.copyWith(
       status: AuthStatusBloc.loading,
-    ));
+    )); */
     final data = await _authRepository.getProfile();
     data.fold((l) {
       emit(state.copyWith(
-        status: AuthStatusBloc.failure,
+        // status: AuthStatusBloc.failure,
         messageError: l.error,
       ));
     }, (r) {
       emit(state.copyWith(
-        status: AuthStatusBloc.authenticated,
+        //     status: AuthStatusBloc.authenticated,
         user: r,
       ));
     });

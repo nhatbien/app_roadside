@@ -25,7 +25,7 @@ class HistoryOrderBloc extends Bloc<HistoryOrderEvent, HistoryOrderState> {
     data.fold((l) {
       emit(HistoryOrderFailure(message: l.error ?? 'Error'));
     }, (r) {
-      emit(HistoryOrderSuccess(orders: r));
+      emit(HistoryOrderSuccess(orders: r.reversed.toList()));
     });
   }
 }

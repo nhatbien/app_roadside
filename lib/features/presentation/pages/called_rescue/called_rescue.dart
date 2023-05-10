@@ -44,14 +44,14 @@ class _CalledMapOrderState extends State<CalledMapOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
-      drawer: const DrawerPage(),
+      // key: _key,
+      //drawer: const DrawerPage(),
       body: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
           const LocationCalledMap(),
           _buildBottom(),
-          _buildOpenDrawer(),
+          //  _buildOpenDrawer(),
           _buildTextAddress()
           // _bottomSlide(),
         ],
@@ -92,6 +92,52 @@ class _CalledMapOrderState extends State<CalledMapOrder> {
                         });
                       },
                     )
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      context.read<OrderBloc>().add(
+                          StatsChanged(state.order!.id!, stats: ratingStats));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MapOrder()));
+                    },
+                    child: const Text("OK"),
+                  )
+                ],
+              );
+            },
+          );
+        }
+        if (state.order!.status == 5) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text("Thất bại"),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text("Đơn đã hủy từ đơn vị cứu hộ"),
+                    /* RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          ratingStats = rating;
+                        });
+                      },
+                    ) */
                   ],
                 ),
                 actions: [
@@ -293,11 +339,12 @@ class _CalledMapOrderState extends State<CalledMapOrder> {
       child: FloatingActionButton(
         heroTag: "btn3",
         onPressed: () {
-          _key.currentState?.openDrawer();
+          Navigator.of(context).pop();
+          //_key.currentState?.openDrawer();
         },
         backgroundColor: Colors.white,
         child: const Icon(
-          Icons.menu_rounded,
+          Icons.close,
           color: Colors.black,
           size: 35,
         ),

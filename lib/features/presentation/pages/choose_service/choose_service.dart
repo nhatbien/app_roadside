@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:roadside_assistance/features/presentation/blocs/auth/auth_bloc.dart';
 import 'package:roadside_assistance/features/presentation/blocs/location/location_bloc.dart';
 import 'package:roadside_assistance/features/presentation/blocs/order/order_bloc.dart';
 import 'package:roadside_assistance/features/presentation/pages/choose_service/widget/dropdown_widget.dart';
@@ -55,7 +56,8 @@ class _ChooseServicePageState extends State<ChooseServicePage> {
                       height: 10,
                     ),
                     TextFormField(
-                      initialValue: "0916308704",
+                      initialValue:
+                          context.read<AuthBloc>().state.user?.phone ?? "",
                       showCursor: true,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(
@@ -81,6 +83,13 @@ class _ChooseServicePageState extends State<ChooseServicePage> {
                     ),
                     const SizedBox(
                       height: 15,
+                    ),
+                    const DropdownWidget(
+                      items: [
+                        "Xe Máy",
+                        "Xe hơi",
+                      ],
+                      title: 'Chọn loại xe',
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

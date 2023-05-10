@@ -34,6 +34,21 @@ class AuthImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<ErrorResponse, bool>> register(
+      RegisterRequest requestLogin) async {
+    try {
+      final response = await _clientDio.postJson(
+        buildUrl('/user/signup'),
+        body: requestLogin.toJson(),
+      );
+      return Right(UserResponse.fromJson(response.data).status);
+    } on DioError catch (e) {
+      print(e);
+      return Left(SingleMessageErrorResponse.fromJson(e.response?.data));
+    }
+  }
+
+  @override
   Future<Either<ErrorResponse, UserModel>> getProfile() async {
     try {
       final response =

@@ -24,8 +24,9 @@ final injector = GetIt.instance;
 Future<void> initializeDependencies() async {
   injector.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());
-  injector.registerSingleton<Dio>(Dio()
-      /* ..interceptors.add(
+  injector.registerSingleton<Dio>(
+    Dio()
+      ..interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -33,8 +34,8 @@ Future<void> initializeDependencies() async {
           responseHeader: false,
           compact: false,
         ),
-      ), */
-      );
+      ),
+  );
 
   injector.registerSingleton<GeolocatorPlatform>(GeolocatorPlatform.instance);
 //////////////repository////////////////////
